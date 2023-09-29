@@ -5,3 +5,7 @@ QuickEasyInstaller or QuEI for short, is a single-file application which allows 
 
 # Prerequisites
 chocolately
+
+# Build Instructions
+pip install -r requirements.txt
+pyinstaller main.spec
