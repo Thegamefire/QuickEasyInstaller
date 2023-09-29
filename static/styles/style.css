@@ -1,0 +1,296 @@
+@font-face {
+  font-family: visbyRound;
+  src: url(fonts/VisbyRound/VisbyRoundCF-Regular.woff2);
+}
+@font-face {
+  font-family: visbyRound;
+  src: url(fonts/VisbyRound/VisbyRoundCF-Bold.woff2);
+  font-weight: bold;
+}
+
+:root {
+--normal-background: #313131;
+--mocha-background: #564b3f;
+--accent-color: #b38337;
+}
+
+body {
+    margin: 0;
+}
+
+html {
+    background-color: var(--normal-background);
+    font-family: visbyRound;
+    color: white;
+    padding-top: 0;
+}
+
+h1 {
+    font-size: 75px;
+    margin-left: 2%;
+    color: #b98533;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#application-selection {
+    width: 96%;
+    margin: auto;
+}
+li {
+    list-style-type: none;
+    text-align: left;
+}
+ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+}
+h4 {
+    font-size: 15pt;
+    margin: 0;
+    margin-bottom: 10px;
+}
+#application-list {
+    display: flex;
+    margin-top: 0;
+}
+.application-category {
+    margin: 20px;
+    margin-top: 8px;
+}
+form {
+    text-align: center;
+}
+
+.program-icon {
+     width: 18px;
+     height: 18px;
+}
+
+/* Titlebar */
+#titlebar {
+    background-color: blue;
+    height: 30px;
+}
+#window-title {
+    top: 5px;
+    position: relative;
+}
+#window-btn-container {
+    right: 0;
+    top: 0;
+    height: 30px;
+    padding: 0;
+    position: absolute;
+    background-color: red;
+    display: flex;
+}
+.window-btn {
+    height: 30px;
+    width: 30px;
+    margin: 0;
+    right: 0;
+    border: 0;
+}
+
+
+/* Pop Up Message */
+
+.alert-container{
+    width: 100%;
+    height: 770px;
+    box-sizing: border-box;
+    background-color: rgba(234, 182, 118, 0.2);
+    z-index: 20;
+    position: absolute;
+    top: 30;
+    color: white;
+    transition-duration: 0.3s;
+    transition-property: opacity;
+}
+
+.alert {
+    width: 45%;
+    height: 30%;
+    z-index: 19;
+    position: absolute;
+    background-color: #94846c;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    border-radius: 40px;
+}
+
+.alert-title {
+    margin-top: 10px;
+
+
+}
+.important-alert-text {
+    color: white;
+    font-weight: bold;
+}
+
+/* PopUp Button */
+
+.popup-btn {
+  background-color: #424242;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 18px;
+  border: 3px solid #727272;
+  margin-right:2px;
+  align-self: end;
+}
+
+.popup-btn:hover {
+  background-color: #727272;
+  color: white;
+}
+
+/* Select All Button */
+
+#select-all {
+  background-color: #424242;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 18px;
+  border: 3px solid #727272;
+  margin-right:2px;
+}
+
+#select-all:hover {
+  background-color: #727272;
+  color: white;
+}
+
+/* Clear All Button */
+
+#clear-div {
+    text-align: right;
+    margin: 0;
+}
+
+#clear {
+  background-color: #424242;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 18px;
+  border: 3px solid #727272;
+  margin-right:0;
+}
+
+#clear:hover {
+  background-color: #727272;
+  color: white;
+}
+
+
+/* Generated Button Code */
+.btn {
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 30px;
+  background: #b38337;
+  padding: 15px 25px 15px 25px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #b38337;
+  background-image: -webkit-linear-gradient(top, #b38337, #c9943e);
+  background-image: -moz-linear-gradient(top, #b38337, #c9943e);
+  background-image: -ms-linear-gradient(top, #b38337, #c9943e);
+  background-image: -o-linear-gradient(top, #b38337, #c9943e);
+  background-image: linear-gradient(to bottom, #b38337, #c9943e);
+  text-decoration: none;
+}
+
+/* Generated Checkbox Code */
+
+.control {
+    font-family: arial;
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    padding-top: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.control input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+.control_indicator {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background: #e6e6e6;
+    border: 2px solid #a2a2a2;
+    border-radius: 5px;
+}
+.control:hover input ~ .control_indicator,
+.control input:focus ~ .control_indicator {
+    background: #cccccc;
+}
+
+.control input:checked ~ .control_indicator {
+    background: #C9943E;
+}
+.control:hover input:not([disabled]):checked ~ .control_indicator,
+.control input:checked:focus ~ .control_indicator {
+    background: #0e6647d;
+}
+.control input:disabled ~ .control_indicator {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+}
+.control_indicator:after {
+    box-sizing: unset;
+    content: '';
+    position: absolute;
+    display: none;
+}
+.control input:checked ~ .control_indicator:after {
+    display: block;
+}
+.control-checkbox .control_indicator:after {
+    left: 8px;
+    top: 4px;
+    width: 3px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.control-checkbox input:disabled ~ .control_indicator:after {
+    border-color: #7b7b7b;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <title>QuEI</title>
+</head>
+<body>
+<div id="titlebar" class="pywebview-drag-region"><span id="window-title">Quick Easy Installer</span>
+    <div id="window-btn-container">
+        <button class="window-btn" id="minimize-app-btn">m</button>
+        <button class="window-btn">M</button>
+        <button class="window-btn" id="close-app-btn">X</button>
+    </div>
+</div>
+
+
+<div id="choco-alert-container" class="alert-container">
+    <div class="alert">
+        <h4 class= "alert-title">Choco is not installed!!!</h4>
+        <p class="alert-text">It would appear Chocolatey is not installed on your system.<br>Would you like to install it now?</p>
+        <p class="important-alert-text">(If you don't, this program will close!)</p>
+        <button id="choco-install-btn" class="popup-btn">Yes</button>
+        <button id="choco-no-btn" class="popup-btn">No</button>
+    </div>
+</div>
+<Header>
+    <h1>Quick Easy Installer</h1>
+</Header>
+
+
+
+
+
+
+
+
+
+
+<div id="application-selection">
+    <form method="post">
+        <div id="clear-div">
+            <button id="select-all">Select All</button>
+            <button id="clear">Clear All</button>
+        </div>
+        <ul id="application-list">
+        <li class="application-category">
+            <h4>Game Launchers</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="steam" {% if 'steam' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/steam.png') }}" class="program-icon">Steam</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="epicgames" {% if 'epicgames' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/epicgames.png') }}" class="program-icon">Epic Games Launcher</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="ubisoftconnect" {% if 'ubisoftconnect' in selected_programs %}checked{% endif %}><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/ubisoftconnect.png') }}" class="program-icon">Ubisoft Connect</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="battlenet" {% if 'battlenet' in selected_programs %}checked{% endif %}><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/battlenet.ico') }}" class="program-icon">BattleNet</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="eadesktop" {% if 'eadesktop' in selected_programs %}checked{% endif %}><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/eadesktop.webp') }}" class="program-icon">EA Desktop App</label></li>
+            </ul>
+        </li>
+        <li class="application-category">
+            <h4>Social Applications</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="discord" {% if 'discord' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/discord.png') }}" class="program-icon">Discord</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="vencord" {% if 'vencord' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/vencord.png') }}" class="program-icon">Vencord</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="signal" {% if 'signal' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/signal.png') }}" class="program-icon">Signal</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="whatsapp" {% if 'whatsapp' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/whatsapp.png') }}" class="program-icon">WhatsApp</label></li>
+            </ul>
+        </li>
+        <li class="application-category">
+            <h4>Entertainment</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="spotify" {% if 'spotify' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/spotify.webp') }}" class="program-icon">Spotify</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="stremio" {% if 'stremio' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/stremio.png') }}" class="program-icon">Stremio</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="mpv" {% if 'mpv' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/mpv.png') }}" class="program-icon">MPV</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="vlc" {% if 'vlc' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/vlc.png') }}" class="program-icon">VLC Media Player</label></li>
+            </ul>
+        </li>
+        <li class="application-category">
+            <h4>Tools</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="batterymode" {% if 'batterymode' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/batterymode.ico') }}" class="program-icon">Battery Mode</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="wincompose" {% if 'wincompose' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/wincompose.jpeg') }}" class="program-icon">WinCompose</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="powertoys" {% if 'powertoys' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/powertoys.png') }}" class="program-icon">PowerToys</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="iobitunlocker" {% if 'iobitunlocker' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/iobitunlocker.png') }}" class="program-icon">IOBitUnlocker</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="everything" {% if 'everything' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/everything.ico') }}" class="program-icon">Everything</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="windirstat" {% if 'windirstat' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/windirstat.png') }}" class="program-icon">WinDirStat</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="tcnoaccount" {% if 'tcnoaccount' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/tcnoaccountswitcher.png') }}" class="program-icon">TcNo Account Switcher</label></li>
+            </ul>
+        </li>
+        <li class="application-category">
+            <h4>Files</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="qbittorrent" {% if 'qbittorrent' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/qbittorrent.png') }}" class="program-icon">qBittorrent</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="winrar" {% if 'winrar' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/winrar.png') }}" class="program-icon">WinRAR</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="fdm" {% if 'fdm' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/fdm.png') }}" class="program-icon">Free Download Manager</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="megasync" {% if 'megasync' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/megasync.png') }}" class="program-icon">MegaSync</label></li>
+            </ul>
+        </li>
+        <li class="application-category">
+            <h4>Creation</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="audacity" {% if 'audacity' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/audacity.png') }}" class="program-icon">Audacity</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="paintnet" {% if 'paintnet' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/paintnet.png') }}" class="program-icon">Paint.NET</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="blender" {% if 'blender' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/blender.png') }}" class="program-icon">Blender</label></li>
+            </ul>
+        </li>
+        <li class="application-category">
+            <h4>Hardware related Software</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="ngenuity" {% if 'ngenuity' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/ngenuity.png') }}" class="program-icon">HyperX NGenuity</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="vigem" {% if 'vigem' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/vigem.png') }}" class="program-icon">ViGEMBus Driver</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="paragonpartition" {% if 'paragonpartition' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/paragonpartition.webp') }}" class="program-icon">Paragon Partition Manager</label></li>
+            </ul>
+        </li>
+        <li class="application-category">
+            <h4>Other</h4>
+            <ul>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="firefox" {% if 'firefox' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/firefox.png') }}" class="program-icon">Firefox</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="malwarebytes" {% if 'malwarebytes' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/malwarebytes.png') }}" class="program-icon">Malwarebytes</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="obs" {% if 'obs' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/obs.png') }}" class="program-icon">OBS Studio</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="parsec" {% if 'parsec' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/parsec.png') }}" class="program-icon">Parsec</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="python" {% if 'python' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/python.png') }}" class="program-icon">Python</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="pycharm" {% if 'pycharm' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/pycharm.png') }}" class="program-icon">Pycharm</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="seb" {% if 'seb' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/seb.png') }}" class="program-icon">Safe Exam Browser</label></li>
+                <li><label class="control control-checkbox"><input class="selection-checkbox" type="checkbox" name="selected_programs" value="tor" {% if 'tor' in selected_programs %}checked{% endif %} ><div class="control_indicator"></div><img src="{{ url_for('static', filename='app_icons/tor.png') }}" class="program-icon">Tor Browser</label></li>
+            </ul>
+        </li>
+        </ul>
+        <input class="btn" type="submit" value="Install Software">
+    </form>
+</div>
+<script src= "{{ url_for('static',filename='javascript.js') }}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</body>
+</html>
