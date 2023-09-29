@@ -122,7 +122,7 @@ if __name__ == "__main__":
         t = threading.Thread(target=start_flask)
         t.daemon = True
         t.start()
-
+        print(resource_path("/"))
         window = webview.create_window("Quick Easy Installer", "http://127.0.0.1:7707/", width=1400, height=818,
                                        resizable=False, frameless=True)
         webview.start()
