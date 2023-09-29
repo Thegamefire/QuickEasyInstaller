@@ -11,9 +11,6 @@ app = Flask(__name__)
 
 mode = 'app'
 
-# window.destroy()
-# window.minimize()
-
 chocolatey_apps = {
     # Game Launchers
     'steam': 'steam',
