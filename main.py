@@ -68,9 +68,11 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
+
 def updateProgressbar(percentage):
     global SSE_message
-    SSE_message = 'Progressbar: '+ percentage +'%'
+    SSE_message = 'Progressbar: ' + str(percentage) + '%'
+
 
 def checkChocoVersion():
     try:
@@ -114,7 +116,7 @@ def index():
         selected_programs = request.form.getlist('selected_programs')
         print(selected_programs)
         if selected_programs:
-            percentage_per_program = int(round(100/len(selected_programs)))
+            percentage_per_program = int(round(100 / len(selected_programs)))
             current_percentage = 0
             for program in selected_programs:
                 if program in chocolatey_apps:
@@ -123,8 +125,9 @@ def index():
 
                     # Battery Mode Installation #
                     if program == 'batterymode':
-                        release_info = requests.get("https://api.github.com/repos/tarcode-apps/BatteryMode/releases/latest",
-                                                    allow_redirects=True)
+                        release_info = requests.get(
+                            "https://api.github.com/repos/tarcode-apps/BatteryMode/releases/latest",
+                            allow_redirects=True)
                         print(release_info.json())
                         for asset in release_info.json()["assets"]:
                             print(asset["name"])
@@ -132,14 +135,16 @@ def index():
                                 updateDisplayLog("Downloading BatteryMode...")
                                 installer = requests.get(asset["browser_download_url"], allow_redirects=True)
                                 print(resource_path('installers\\BatteryModeInstaller64.exe'))
-                                open(resource_path('installers\\BatteryModeInstaller64.exe'), 'wb').write(installer.content)
+                                open(resource_path('installers\\BatteryModeInstaller64.exe'), 'wb').write(
+                                    installer.content)
                                 updateDisplayLog("Installing BatteryMode...")
                                 installer_log = subprocess.run(
                                     [resource_path("installers/BatteryModeInstaller64.exe"), "/VERYSILENT"],
                                     capture_output=True)
                             else:
-                                updateDisplayLog("BatteryMode Installer not found in github repo, please create an issue "
-                                                 "on the QuEI github repo", message_type="Error")
+                                updateDisplayLog(
+                                    "BatteryMode Installer not found in github repo, please create an issue "
+                                    "on the QuEI github repo", message_type="Error")
 
                     # Safe Exam Browser Installation #
                     elif program == 'seb':
@@ -153,8 +158,23 @@ def index():
                                 updateDisplayLog("Downloading Safe Exam Browser...")
                                 installer = requests.get(asset["browser_download_url"], allow_redirects=True)
                                 print(resource_path('installers\\SEBInstaller.exe'))
+                                updateDisplayLog("Installing Safe Exam Browser...")
                                 open(resource_path('installers\\SEBInstaller.exe'), 'wb').write(installer.content)
-                                # Install SEB Using:  SEB_w.x.y.z_SetupBundle.exe /install /quiet /norestart
+                                installer_log = subprocess.run(
+                                    [resource_path("installers/SEBInstaller.exe"), "/install /quiet /norestart"],
+                                    capture_output=True)  # Test necessary
+                    elif program == 'battlenet':
+                        updateDisplayLog("Downloading BattleNet...")
+                        release_info = requests.get(
+                            "https://downloader.battle.net/download/getInstallerForGame?os=win&gameProgram"
+                            "=BATTLENET_APP&version=Live",
+                            allow_redirects=True)
+                        open(resource_path('installers\\BattleNetInstaller.exe'), 'wb').write(release_info.content)
+                        updateDisplayLog("Installing BattleNet...")
+                        installer_log = subprocess.run(
+                            [resource_path("installers/BattleNetInstaller.exe"),
+                             "--lang=enUS --installpath=\"C:\Program Files (x86)\Battle.net"],
+                            capture_output=True)  # Test necessary
                 current_percentage = + percentage_per_program
                 updateProgressbar(current_percentage)
 
@@ -174,9 +194,6 @@ def minimize_app():
     global SSE_message
     SSE_message = 'Progressbar: 40%'
     return ""
-
-
-
 
 
 def start_flask():
