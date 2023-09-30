@@ -6,6 +6,27 @@ document.getElementById('choco-no-btn').addEventListener("click", killApp)
 document.getElementById('close-app-btn').addEventListener("click", killApp)
 document.getElementById('minimize-app-btn').addEventListener("click", minimizeApp)
 
+// SSE Listener //
+const eventSource = new EventSource('/sse');
+let lastSSEMessage = null
+
+eventSource.onmessage = function(event) {
+    const data = event.data;
+	if (data!=lastSSEMessage) {
+		lastSSEMessage = data
+		// Handle the incoming data as needed
+		console.log(data);
+		if (data.startsWith('Progressbar:')) {
+			document.getElementById('progress-bar').value = data.substring(13, data.length - 1)
+		} // If adding when adding new message has delay between receiving messages split on &&&&
+	}
+};
+
+eventSource.onerror = function(event) {
+    console.error('Error occurred:', event);
+};
+
+
 function clearAll(event) {
     event.preventDefault(); // Prevent the default form submission behavior
 
@@ -77,3 +98,6 @@ function minimizeApp(event) {
 		}
 	});
 }
+
+
+
