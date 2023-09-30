@@ -117,7 +117,6 @@ def index():
         print(selected_programs)
         if selected_programs:
             percentage_per_program = int(round(100 / len(selected_programs)))
-            current_percentage = 0
             for program in selected_programs:
                 if program in chocolatey_apps:
                     pass  # Choco install app
