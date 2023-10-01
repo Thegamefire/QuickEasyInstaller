@@ -5,6 +5,7 @@ import threading
 import webview
 import time
 import requests
+import ctypes
 
 from flask import Flask, request, render_template, redirect, Response
 
@@ -15,47 +16,62 @@ SSE_message = ""
 
 chocolatey_apps = {
     # Game Launchers
-    'steam': 'steam',
-    'epicgames': 'epicgameslauncher',
-    'ubisoftconnect': 'ubisoft-connect',
-    'eadesktop': 'ea-app',
+    'steam': ['steam', 'Steam'],
+    'epicgames': ['epicgameslauncher', 'Epic Games Launcher'],
+    'ubisoftconnect': ['ubisoft-connect', 'Ubisoft Connect'],
+    'eadesktop': ['ea-app', 'EA Desktop App'],
     # Social Apps
-    'discord': 'discord',
-    'signal': 'signal',
-    'whatsapp': 'whatsapp',
+    'discord': ['discord', 'Discord'],
+    'signal': ['signal', 'Signal'],
+    'whatsapp': ['whatsapp', 'WhatsApp'],
     # Entertainment
-    'spotify': 'spotify',
-    'stremio': 'stremio',
-    'mpv': 'mpv',
-    'vlc': 'vlc',
+    'spotify': ['spotify', 'Spotify'],
+    'stremio': ['stremio', 'Stremio'],
+    'mpv': ['mpv', 'MPV'],
+    'vlc': ['vlc', 'VLC Media Player'],
     # Tools
-    'wincompose': 'wincompose',
-    'powertoys': 'powertoys',
-    'iobitunlocker': 'io-unlocker',
-    'everything': 'everything',
-    'windirstat': 'windirstat',
-    'tcnoaccount': 'tcno-acc-switcher',
+    'wincompose': ['wincompose', 'WinCompose'],
+    'powertoys': ['powertoys', 'Microsoft PowerToys'],
+    'iobitunlocker': ['io-unlocker', 'IOBitUnlocker'],
+    'everything': ['everything', 'Everything'],
+    'windirstat': ['windirstat', 'WinDirStat'],
+    'tcnoaccount': ['tcno-acc-switcher', 'TCNO Account Switcher'],
     # Files
-    'qbittorrent': 'qbittorrent',
-    'winrar': 'winrar',
-    'fdm': 'freedownloadmanger',
-    'megasync': 'megasync',
-    'audacity': 'audacity',
-    'paintnet': 'paint.net',
-    'blender': 'blender',
+    'qbittorrent': ['qbittorrent', 'qBittorrent'],
+    'winrar': ['winrar', 'WinRAR'],
+    'fdm': ['freedownloadmanger', 'Free Download Manager'],
+    'megasync': ['megasync', 'MegaSync'],
+    'audacity': ['audacity', 'Audacity'],
+    'paintnet': ['paint.net', 'Paint.NET'],
+    'blender': ['blender', 'Blender'],
     # Hardware Apps
-    'ngenuity': 'hyperx-ngenuity',
-    'vigem': 'vigembus',
-    'paragonpartition': 'partition-manager',
+    'ngenuity': ['hyperx-ngenuity', 'HyperX Ngenuity'],
+    'vigem': ['vigembus', 'ViGEM Bus Driver'],
+    'paragonpartition': ['partition-manager', 'Paragon Partition Manager'],
     # Other
-    'firefox': 'firefox',
-    'malwarebytes': 'malwarebytes',
-    'obs': 'obs-studio',
-    'parsec': 'parsec',
-    'python': 'python',
-    'pycharm': 'pycharm-community',
-    'tor': 'tor-browser'
+    'firefox': ['firefox', 'Firefox'],
+    'malwarebytes': ['malwarebytes', 'Malwarebytes'],
+    'obs': ['obs-studio', 'OBS Studio'],
+    'parsec': ['parsec', 'Parsec'],
+    'python': ['python', 'Python'],
+    'pycharm': ['pycharm-community', 'Pycharm Community Edition'],
+    'tor': ['tor-browser', 'Tor Browser']
 }
+
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+
+def uac_elevation():
+    if not is_admin():
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1) #Needs to be changed to sys.argv[1:] in build !!or not ig
+        print(is_admin())
+        if not is_admin():
+            shutdown_server()
 
 
 def resource_path(relative_path):
@@ -120,6 +136,14 @@ def index():
             for program in selected_programs:
                 if program in chocolatey_apps:
                     pass  # Choco install app
+                    updateDisplayLog(f'Installing {chocolatey_apps[program][1]}...')
+                    result = subprocess.run(["choco", "install", chocolatey_apps[program][0], '-y'], capture_output=True)
+                    print(result)
+                    if result.returncode == 0:
+                        print(f"Successfully installed {chocolatey_apps[program][1]}!")
+                    else:
+                        print(f"Failed to install {chocolatey_apps[program][1]}.")
+                        print(result.stderr)
                 else:
 
                     # Battery Mode Installation #
@@ -204,6 +228,7 @@ if __name__ == "__main__":
     t.daemon = True
     t.start()
     print(resource_path("/"))
+    uac_elevation()
     window = webview.create_window("Quick Easy Installer", "http://127.0.0.1:7707/", width=1400, height=818,
                                    resizable=False, frameless=True)
     webview.start()
