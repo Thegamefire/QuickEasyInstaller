@@ -103,11 +103,12 @@ def checkChocoVersion():
 
 @app.route("/chocoinstall", methods=['GET'])
 def InstallChoco():
-    subprocess.run(["choco", "-v"],
-                   capture_output=True)
+    # subprocess.run(["powershell.exe", "-NoProfile", "-InputFormat", "None", "-ExecutionPolicy", "Bypass", "-Command",
+    #                 f"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"],
+    #                check=True)
     # choco_version = checkChocoVersion()
     # if choco_version is None:
-    #     print("Installation Failed")
+    #     print("Choco Installation Failed")
     return redirect("/", code=302)
 
 
@@ -231,7 +232,7 @@ if __name__ == "__main__":
     print(resource_path("/"))
     uac_elevation()
     window = webview.create_window("Quick Easy Installer", "http://127.0.0.1:7707/", width=1400, height=818,
-                                   resizable=False, frameless=True)
+                                   resizable=False, frameless=True, easy_drag=False)
     webview.start()
 
     sys.exit()
