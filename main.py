@@ -233,6 +233,7 @@ if __name__ == "__main__":
     uac_elevation()
     window = webview.create_window("Quick Easy Installer", "http://127.0.0.1:7707/", width=1400, height=818,
                                    resizable=False, frameless=True, easy_drag=False)
+
     webview.start()
 
     sys.exit()

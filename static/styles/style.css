@@ -103,13 +103,22 @@ form {
 
 
 /* Titlebar */
+#titlebar-icon {
+    width: 25px;
+    height: 25px;
+    margin: 2.5px;
+    margin-left: 7px;
+}
+
 #titlebar {
     background-color: blue;
     height: 30px;
 }
 #window-title {
-    top: 5px;
+    top: -8px;
+    margin-left: 8px;
     position: relative;
+    display: inline-block;
 }
 #window-btn-container {
     right: 0;
@@ -133,9 +142,9 @@ form {
 
 .alert-container{
     width: 100%;
-    height: 770px;
+    height: 785px;
     box-sizing: border-box;
-    background-color: rgba(234, 182, 118, 0.2);
+    background-color: rgba(50, 50, 50, 0.6);
     z-index: 20;
     position: absolute;
     top: 30;
