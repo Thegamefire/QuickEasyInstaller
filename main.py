@@ -55,6 +55,7 @@ chocolatey_apps = {
     'parsec': ['parsec', 'Parsec'],
     'python': ['python', 'Python'],
     'pycharm': ['pycharm-community', 'Pycharm Community Edition'],
+    'git': ['git', 'Git'],
     'tor': ['tor-browser', 'Tor Browser']
 }
 
