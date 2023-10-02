@@ -113,8 +113,10 @@ def InstallChoco():
 
 
 def updateDisplayLog(message, message_type='normal'):
-    display_log.append(message)
+    global SSE_message
+    display_log.append([message, message_type])
     print(display_log[-1])
+    SSE_message = f'DisplayLog Append: {message_type}: {message}'
 
 
 @app.route('/sse')
@@ -230,7 +232,7 @@ if __name__ == "__main__":
     t.daemon = True
     t.start()
     print(resource_path("/"))
-    uac_elevation()
+    # uac_elevation()
     window = webview.create_window("Quick Easy Installer", "http://127.0.0.1:7707/", width=1400, height=818,
                                    resizable=False, frameless=True, easy_drag=False)
 

@@ -83,6 +83,19 @@ form {
     margin: 0;
     margin-bottom: 10px;
     height: 50px;
+    overflow: hidden;
+}
+
+.normal-log {
+    margin: 0;
+}
+.warning-log {
+    margin: 0;
+    color: darkkhaki;
+}
+.error-log {
+    margin: 0;
+    color: indianred;
 }
 
 #progress-bar {

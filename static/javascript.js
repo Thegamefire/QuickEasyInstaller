@@ -6,6 +6,8 @@ document.getElementById('choco-no-btn').addEventListener("click", killApp)
 document.getElementById('close-app-btn').addEventListener("click", killApp)
 document.getElementById('minimize-app-btn').addEventListener("click", minimizeApp)
 
+var loggedInfo = ['<p class="normal-log">Test normal log</p><p class="warning-log">This is a warning log</p><p class="error-log">This is a warning log</p><p class="normal-log">Test normal displaylog</p><p class="warning-log">This is a warning log</p><p class="error-log">This is a warning log</p>']
+
 // SSE Listener //
 const eventSource = new EventSource('/sse');
 let lastSSEMessage = null
@@ -99,5 +101,25 @@ function minimizeApp(event) {
 	});
 }
 
+function addToDisplayLog(message, type='normal') {
+	displayLog = document.getElementById("log-display");
+	if (type =='normal') {
+		loggedInfo.push('<p class="normal-log">'+message+'</p>')
+	} else {
+		if (type=='Error') {
+			loggedInfo.push('<p class="error-log">'+message+'</p>')
+		} else {
+			if (type=='Warning') {
+				loggedInfo.push('<p class="warning-log">'+message+'</p>')
+			}
+		}
+	}
+	displayLogString = ""
+	for (const logMessage of loggedInfo) {
+		displayLogString = displayLogString+logMessage
+	}
+	displayLog.innerHTML=displayLogString
+    displayLog.scrollTop = displayLog.scrollHeight + 10;
+}
 
-
+addToDisplayLog("This is a normal log")
