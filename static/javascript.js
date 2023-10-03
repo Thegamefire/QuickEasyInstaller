@@ -20,7 +20,12 @@ eventSource.onmessage = function(event) {
 		console.log(data);
 		if (data.startsWith('Progressbar:')) {
 			document.getElementById('progress-bar').value = data.substring(13, data.length - 1)
-		} // If adding when adding new message has delay between receiving messages split on &&&&
+		} else {// If adding when adding new message has delay between receiving messages split on &&&
+			if (data.startsWith("DisplayLog Append: ")) {
+				args = data.split(' ')
+				addToDisplayLog(args[2], args[3])
+			}
+		}
 	}
 };
 
