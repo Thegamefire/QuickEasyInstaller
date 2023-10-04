@@ -5,6 +5,8 @@ document.getElementById('choco-install-btn').addEventListener("click", installCh
 document.getElementById('choco-no-btn').addEventListener("click", killApp)
 document.getElementById('close-app-btn').addEventListener("click", killApp)
 document.getElementById('minimize-app-btn').addEventListener("click", minimizeApp)
+document.getElementById('close-credits-btn').addEventListener("click", closeCredits)
+document.getElementById('info-link').addEventListener("click", openCredits)
 
 var loggedInfo = ['<p class="normal-log">Test normal log</p><p class="warning-log">This is a warning log</p><p class="error-log">This is a warning log</p><p class="normal-log">Test normal displaylog</p><p class="warning-log">This is a warning log</p><p class="error-log">This is a warning log</p>']
 
@@ -104,6 +106,19 @@ function minimizeApp(event) {
 		console.log(data);
 		}
 	});
+}
+
+function openCredits(event) {
+    document.getElementById("credits-alert-container").style.display = "block"
+	setTimeout(function(){
+    document.getElementById("credits-alert-container").style.opacity = "1"
+	}, 250);
+}
+function closeCredits(event) {
+	document.getElementById("credits-alert-container").style.opacity = "0"
+	setTimeout(function(){
+    document.getElementById("credits-alert-container").style.display = "none"
+	}, 250);
 }
 
 function addToDisplayLog(message, type='normal') {

@@ -6,7 +6,9 @@
     <title>QuEI</title>
 </head>
 <body>
-<div id="titlebar" class="pywebview-drag-region"><img src="{{ url_for('static', filename='favicon.ico') }}" id="titlebar-icon"><span id="window-title">Quick Easy Installer</span>
+<div id="titlebar" class="pywebview-drag-region">
+    <img src="{{ url_for('static', filename='favicon.ico') }}" id="titlebar-icon">
+    <span id="window-title">Quick Easy Installer</span>
     <div id="window-btn-container">
         <button class="window-btn" id="minimize-app-btn">m</button>
         <button class="window-btn">M</button>
@@ -24,6 +26,26 @@
         <button id="choco-no-btn" class="popup-btn">No</button>
     </div>
 </div>
+
+<div id="credits-alert-container" class="alert-container">
+    <div class="alert">
+        <h4 class= "alert-title">Credits</h4>
+        <img src="{{ url_for('static', filename='other_icons/close_icon.png') }}" id="close-credits-btn">
+        <p class="alert-text">Design by Michi & Nathan Onraet
+            <br>
+            Code by Nathan Onraet
+            <br>
+            <br>
+            Uses <a href="">Chocolatey</a> from Chocolatey Software, Inc.
+            <br>
+            Uses <a href="">Flask</a> from Pallets Projects
+            <br>
+            Uses <a href="">PyWebView</a> from r0x0r
+        </p>
+        <p class="important-alert-text">(If you don't, this program will close!)</p>
+    </div>
+</div>
+
 <Header>
     <h1>Quick Easy Installer</h1>
     <div id="social-container">
