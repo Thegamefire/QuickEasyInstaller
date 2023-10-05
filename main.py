@@ -69,7 +69,7 @@ def is_admin():
 
 def uac_elevation():
     if not is_admin():
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1) #Needs to be changed to sys.argv[1:] in build !!or not ig
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1) # Needs to be changed to sys.argv[1:] in build !!or not ig
         print(is_admin())
         if not is_admin():
             shutdown_server()
@@ -139,7 +139,7 @@ def index():
             percentage_per_program = int(round(100 / len(selected_programs)))
             for program in selected_programs:
                 if program in chocolatey_apps:
-                    pass  # Choco install app
+                    # Choco install app
                     updateDisplayLog(f'Installing {chocolatey_apps[program][1]}...')
                     result = subprocess.run(["choco", "install", chocolatey_apps[program][0], '-y'], capture_output=True)
                     print(result)
@@ -172,7 +172,6 @@ def index():
                                 updateDisplayLog(
                                     "BatteryMode Installer not found in github repo, please create an issue "
                                     "on the QuEI github repo", message_type="Error")
-
                     # Safe Exam Browser Installation #
                     elif program == 'seb':
                         release_info = requests.get(
@@ -190,6 +189,11 @@ def index():
                                 installer_log = subprocess.run(
                                     [resource_path("installers/SEBInstaller.exe"), "/install /quiet /norestart"],
                                     capture_output=True)  # Test necessary
+                            else:
+                                updateDisplayLog(
+                                    "Safe Exam Browser Installer not found in github repo, please create an issue "
+                                    "on the QuEI github repo", message_type="Error")
+                    # BattleNet Installation
                     elif program == 'battlenet':
                         updateDisplayLog("Downloading BattleNet...")
                         release_info = requests.get(
@@ -204,6 +208,8 @@ def index():
                             capture_output=True)  # Test necessary
                 current_percentage = + percentage_per_program
                 updateProgressbar(current_percentage)
+
+            updateDisplayLog("Done")
 
     return render_template('index.html', selected_programs=selected_programs)
 
