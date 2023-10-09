@@ -1,4 +1,4 @@
-![](https://github.com/Thegamefire/QuickEasyInstaller/blob/master/static/img/TitleLogo.png?raw=true)
+![](https://github.com/Thegamefire/QuickEasyInstaller/blob/master/static/img/TitleLogo.svg?raw=true)
 
 # QuickEasyInstaller
 
