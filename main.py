@@ -123,7 +123,7 @@ def updateDisplayLog(message, message_type='normal'):
     global SSE_message
     display_log.append([message, message_type])
     print(display_log[-1])
-    SSE_message = f'DisplayLog Append: {message_type}: {message}'
+    SSE_message = f'DisplayLog Append: {message_type} {message}'
 
 
 def installPrograms(selected_programs):
