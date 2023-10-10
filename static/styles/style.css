@@ -125,7 +125,7 @@ form {
 }
 
 #titlebar {
-    background-color: blue;
+    background-color: rgba(57,57,57,255);
     height: 30px;
 }
 #window-title {
@@ -151,15 +151,17 @@ form {
     border: 0;
 }
 #close-app-btn {
-    background-image: url("https://cdn-icons-png.flaticon.com/512/2618/2618352.png");
+    background-image: url("../other_icons/close_icon.png");
     background-color: rgba(230, 230, 230, 0);
-    background-size: 30px 30px;
+    background-size: 16px 16px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 #close-app-btn:hover {
     background-color: rgba(230, 0, 0, 1);
 }
 #minimize-app-btn {
-    background-image: url("https://static.thenounproject.com/png/3403551-200.png");
+    background-image: url("../other_icons/witisnogbeterer.png");
     background-color: rgba(230, 230, 230, 0);
     background-size: 30px 30px;
 }
@@ -167,9 +169,12 @@ form {
     background-color: rgba(230, 230, 230, 0.5);
 }
 #maximize-app-btn {
-    background-image: url('');
+    background-image: url("../other_icons/witisnogbetererer.png");
     background-color: transparent;
-    opacity: 0.5;
+    opacity: 0.3;
+    background-size: 20px 20px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Social Links */
