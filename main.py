@@ -68,7 +68,7 @@ def is_admin():
 
 
 def uac_elevation():
-    """ Checks if the code is run as administrator, and if it isn't it asks for admin privilages and closes if it
+    """ Checks if the code is run as administrator, and if it isn't it asks for admin privileges and closes if it
     doesn't get them"""
     if not is_admin():
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
