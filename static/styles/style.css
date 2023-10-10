@@ -69,6 +69,7 @@ form {
 }
 
 /* Progress Bar Container */
+
 #progress-container {
     margin-top: 10px!important;
     width: 90%;
@@ -115,8 +116,8 @@ form {
     border-radius: 50px;
 }
 
-
 /* Titlebar */
+
 #titlebar-icon {
     width: 25px;
     height: 25px;
@@ -264,7 +265,7 @@ form {
     width: 30px;
     height: 30px;
     border-style: solid;
-    border-color: #fcbc48;
+    border-color: #b88739;
     border-width: 3px;
     padding: 3.5px;
     border-radius: 25%;
@@ -278,7 +279,7 @@ form {
     background-position: center;
 }
 #close-credits-btn:hover {
-    background-color: #fcbc48;
+    background-color: #b88739;
     background-image: url("../other_icons/close_icon_hover.png");
     background-size: 25px 25px;
     background-position: center;
@@ -308,11 +309,11 @@ form {
   background-color: #3A3A3A;
 }
 .popup-focus-btn {
-    background-color: #fcbc48;
+    background-color: #dea344;
     color: #000;
 }
 .popup-focus-btn:hover {
-    background-color: #ffca48;
+    background-color: #efb355;
 }
 
 
@@ -368,6 +369,7 @@ form {
 
 
 /* Generated Button Code */
+
 .btn {
   -webkit-border-radius: 10;
   -moz-border-radius: 10;
