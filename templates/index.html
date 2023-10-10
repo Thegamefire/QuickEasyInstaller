@@ -25,15 +25,17 @@
         <h4 class= "alert-title">Choco is not installed!!!</h4>
         <p class="alert-text">It would appear Chocolatey is not installed on your system.<br>Would you like to install it now?</p>
         <p class="important-alert-text">(If you don't, this program will close!)</p>
-        <button id="choco-install-btn" class="popup-btn">Yes</button>
-        <button id="choco-no-btn" class="popup-btn">No</button>
+        <div class="alert-btn-container">
+            <button id="choco-install-btn" class="popup-btn">Install Chocolatey</button>
+            <button id="choco-no-btn" class="popup-btn popup-focus-btn">Close</button>
+        </div>
     </div>
 </div>
 
 <div id="credits-alert-container" class="alert-container">
     <div class="alert">
         <h4 class= "alert-title">Credits</h4>
-        <img src="{{ url_for('static', filename='other_icons/close_icon.png') }}" id="close-credits-btn">
+        <button id="close-credits-btn"></button>
         <p class="alert-text">Design by Michi & Nathan Onraet
             <br>
             Code by Nathan Onraet
@@ -45,7 +47,6 @@
             <br>
             Uses <a href="">PyWebView</a> from r0x0r
         </p>
-        <p class="important-alert-text">(If you don't, this program will close!)</p>
     </div>
 </div>
 
