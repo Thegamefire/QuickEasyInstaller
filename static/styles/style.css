@@ -55,7 +55,7 @@ h4 {
     margin-top: 0;
 }
 .application-category {
-    margin: 20px;
+    margin: 10px;
     margin-top: 8px;
     margin-bottom: 8px
 }
@@ -167,7 +167,7 @@ form {
     background-size: 30px 30px;
 }
 #minimize-app-btn:hover {
-    background-color: rgba(230, 230, 230, 0.5);
+    background-color: rgba(230, 230, 230, 0.2);
 }
 #maximize-app-btn {
     background-image: url("../other_icons/witisnogbetererer.png");
@@ -289,6 +289,31 @@ form {
     background-size: 25px 25px;
     background-position: center;
 }
+
+#done-alert-container {
+    display: none;
+    opacity: 0;
+}
+.done-alert-btn-container {
+    height: 10%;
+}
+.done-alert {
+    height: 80%;
+}
+.warning-result {
+    color: darkkhaki;
+}
+.error-result {
+    color: indianred;
+}
+
+#install-result-container {
+    overflow: auto;
+    height: 80%;
+    text-align: left;
+    margin-left: 25px;
+}
+
 .alert-text a {
     color: white;
 }

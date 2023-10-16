@@ -51,10 +51,12 @@
 </div>
 
 <div id="done-alert-container" class="alert-container">
-    <div class="alert">
+    <div class="alert done-alert">
         <h4 class="alert-title">Operation Completed:</h4>
         <div id="install-result-container"></div>
-        <button class="popup-btn popup-focus-btn">Ok</button>
+        <div class="done-alert-btn-container alert-btn-container">
+            <button id="close-done-alert-btn" class="popup-btn popup-focus-btn">Close</button>
+        </div>
     </div>
 </div>
 
@@ -63,6 +65,7 @@
     <div id="social-container">
         <a href="https://github.com/Thegamefire/QuickEasyInstaller" id="github-link" class="social-link" target=”_blank”><img src="{{ url_for('static', filename='social_icons/github.png') }}" class="social-icon"></a>
         <a href="#" id="info-link" class="social-link"><img src="{{ url_for('static', filename='social_icons/info.png') }}" class="social-icon"></a>
+        <a href="#" id="done-test" class="social-link">DT</a>
     </div>
 </Header>
 

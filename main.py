@@ -128,6 +128,7 @@ def updateDisplayLog(message, message_type='normal'):
 
 def installPrograms(selected_programs):
     """Installs the selected Programs"""
+    global SSE_message
     if selected_programs:
         percentage_per_program = int(round(100 / len(selected_programs)))
 
@@ -235,6 +236,7 @@ def installPrograms(selected_programs):
             updateProgressbar(current_percentage)
 
         updateDisplayLog("Done")
+        SSE_message = "Completed Operation"
 
 
 @app.route('/sse')

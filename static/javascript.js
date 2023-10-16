@@ -7,12 +7,18 @@ document.getElementById('close-app-btn').addEventListener("click", killApp)
 document.getElementById('minimize-app-btn').addEventListener("click", minimizeApp)
 document.getElementById('close-credits-btn').addEventListener("click", closeCredits)
 document.getElementById('info-link').addEventListener("click", openCredits)
+document.getElementById('close-done-alert-btn').addEventListener("click", closeOperationCompleted)
+document.getElementById('done-test').addEventListener("click", showOperationCompleted)
 
-var loggedInfo = ['<p class="normal-log">Test normal log</p><p class="warning-log">This is a warning log</p><p class="error-log">This is a warning log</p><p class="normal-log">Test normal displaylog</p><p class="warning-log">This is a warning log</p><p class="error-log">This is a warning log</p>']
+
+
+var loggedInfo = ['<p class="normal-log">Test normal log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log what a great test this is lorem ipsum nog wat shit ben ik al ver genoeg, ik heb geen idee wij gaan verder wiiiiiiiiiiii</p>', '<p class="normal-log">Test normal displaylog</p>', '<p class="warning-log">This is a warning log</p>', '<p class="error-log">This is an error log</p>']
+
 
 // SSE Listener //
 const eventSource = new EventSource('/sse');
 let lastSSEMessage = null
+let collected_err = {}
 
 eventSource.onmessage = function(event) {
     const data = event.data;
@@ -26,6 +32,10 @@ eventSource.onmessage = function(event) {
 			if (data.startsWith("DisplayLog Append: ")) {
 				args = data.split(' ')
 				addToDisplayLog(args[2], args[3])
+			} else {
+				if (data = "Completed Operation") {
+					showOperationCompleted()
+				}
 			}
 		}
 	}
@@ -121,6 +131,29 @@ function closeCredits(event) {
 	}, 250);
 }
 
+function showOperationCompleted(event) {
+	let operationResult = ""
+	for (const warningMessage of loggedInfo) {
+		if (!(warningMessage.substring(10, 20) == "normal-log")) {
+			operationResult = operationResult + warningMessage.replace('warning-log', 'warning-result').replace('error-log', 'error-result')
+		}
+	}
+	console.log(operationResult)
+	document.getElementById('install-result-container').innerHTML = operationResult
+
+
+    document.getElementById("done-alert-container").style.display = "block"
+	setTimeout(function(){
+    document.getElementById("done-alert-container").style.opacity = "1"
+	}, 250);
+}
+function closeOperationCompleted(event) {
+	document.getElementById("done-alert-container").style.opacity = "0"
+	setTimeout(function(){
+    document.getElementById("done-alert-container").style.display = "none"
+	}, 250);
+}
+
 function addToDisplayLog(message, type='normal') {
 	displayLog = document.getElementById("log-display");
 	if (type =='normal') {
@@ -133,6 +166,7 @@ function addToDisplayLog(message, type='normal') {
 				loggedInfo.push('<p class="warning-log">'+message+'</p>')
 			}
 		}
+		collected_err.Append(type + " " + message)
 	}
 	displayLogString = ""
 	for (const logMessage of loggedInfo) {
