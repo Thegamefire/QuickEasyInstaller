@@ -14,6 +14,7 @@ app = Flask(__name__)
 display_log = []
 SSE_message = ""
 
+alphabet = '0abcdefghijklmopqrstuvwxyz'  # There is no 'n' because 'n' is the split character in the package seeds
 chocolatey_apps = {
     # Game Launchers
     'steam': ['steam', 'Steam'],
@@ -57,7 +58,47 @@ chocolatey_apps = {
     'pycharm': ['pycharm-community', 'Pycharm Community Edition'],
     'git': ['git', 'Git'],
     'tor': ['tor-browser', 'Tor Browser']
-}   # Dictionary with the chocolatey package name and the Display Name of each choco package
+}  # Dictionary with the chocolatey package name and the Display Name of each choco package
+application_decode_dict = {
+    1: 'steam',
+    2: 'epicgames',
+    3: 'ubsisoftconnect',
+    4: 'battlenet',
+    5: 'eadesktop',
+    6: 'discord',
+    7: 'signal',
+    8: 'whatsapp',
+    9: 'spotify',
+    10: 'stremio',
+    11: 'mpv',
+    12: 'vlc',
+    13: 'batterymode',
+    14: 'wincompose',
+    15: 'powertoys',
+    16: 'iobitunlocker',
+    17: 'everything',
+    18: 'windirstat',
+    19: 'tcnoaccount',
+    20: 'qbittorrent',
+    21: 'winrar',
+    22: 'fdm',
+    23: 'megasync',
+    24: 'audacity',
+    25: 'paintnet',
+    26: 'blender',
+    27: 'ngenuity',
+    28: 'vigem',
+    29: 'paragonpartition',
+    30: 'firefox',
+    31: 'malwarebytes',
+    32: 'obs',
+    33: 'parsec',
+    34: 'python',
+    35: 'pycharm',
+    36: 'git',
+    37: 'seb',
+    38: 'tor'
+}
 
 
 def is_admin():
@@ -87,6 +128,59 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
+
+def get_package_seed(application_list):
+    """ Get the package seed of an application list """
+    package_seed = ''
+    for application in application_list:
+        application_number = None
+        if not package_seed == '':
+            package_seed = package_seed + 'n'
+
+        for key in application_decode_dict:
+            if application_decode_dict[key] == application:
+                application_number = key
+                break
+        if not application_number:
+            print("Invalid Package Seed")
+        else:
+            if application_number < 35:
+                if application_number < 10:
+                    packaged_application_number = str(application_number)
+                else:
+                    packaged_application_number = str(alphabet[application_number - 9])
+            else:
+
+                if (application_number - application_number % 34) / 34 < 10:
+                    packaged_application_number = str(int((application_number - application_number % 34) / 34))
+                else:
+                    packaged_application_number = str(
+                        alphabet[int((application_number - application_number % 34) / 34 - 9)])
+                if application_number % 34 < 10:
+                    packaged_application_number = packaged_application_number + str(int(application_number % 34))
+                else:
+                    packaged_application_number = packaged_application_number + str(
+                        alphabet[int(application_number % 34 - 9)])
+
+        package_seed = package_seed + packaged_application_number
+    return package_seed
+
+
+def decrypt_package_seed(seed):
+    """ Return the application list corresponding to a package seed """
+    application_list = []
+    seed_codes = seed.split('n')
+    for code in seed_codes:
+        application_number = 0
+        reversed_code = code[::-1]
+        for i, char in enumerate(reversed_code):
+            try:
+                application_number = application_number + int(char) * (34 ** i)
+            except ValueError:
+                application_number = application_number + int(alphabet.index(char)+9) * (34 ** i)
+        application_list.append(application_decode_dict[application_number])
+    return application_list
 
 
 def updateProgressbar(percentage):
