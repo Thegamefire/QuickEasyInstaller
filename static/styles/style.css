@@ -53,7 +53,7 @@ h4 {
 #application-list {
     display: flex;
     margin-top: 0;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 .application-category {
     margin: 10px;
@@ -87,6 +87,15 @@ form {
     margin-bottom: 10px;
     height: 50px;
     overflow: hidden;
+}
+::-webkit-scrollbar {
+    background-color: #3a3a3a;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #515151;
+    border-radius: 20px;
 }
 
 .normal-log {
@@ -348,6 +357,50 @@ form {
 }
 
 
+#package-seed-input {
+    position: absolute;
+    left: 150px;
+    height: 18px;
+    margin-top: 5px;
+    width: 35%;
+
+    appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #b38337;
+	background-color: rgba(87, 87, 87, 0.5);
+	border-radius: .5em .5em .3em .3em;
+	padding: .4em;
+    padding-left: 9px;
+	color: #fff;
+}
+#seed-label {
+    position: absolute;
+    left: 35px;
+    margin-top: 10px;
+}
+#seed-btn {
+    background-color: #424242;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 14px;
+    border: 3px solid #727272;
+    margin-right:2px;
+    margin-top: 2px;
+    position: absolute;
+    left: 660px;
+}
+#seed-btn:hover {
+    background-color: #727272;
+    color: white;
+}
+
 
 /* Select All Button */
 
@@ -399,6 +452,33 @@ form {
   color: white;
 }
 
+#clipboard-btn {
+    padding: 0px 16px;
+    border-radius: 8px;
+    background: #424242;
+    border: 3px solid #727272;
+    transition-duration: 0.4s;
+    color: #fff;
+    font-size: 27px;
+    margin-left: 15px;
+    height: 67px;
+    position: relative;
+    top: 10px;
+}
+#clipboard-btn:hover {
+  background-color: #727272;
+}
+#clipboard-icon {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: -11px;
+    top: 3px;
+}
+#copy-label {
+    position: relative;
+    top: -14px;
+}
 
 /* Generated Button Code */
 

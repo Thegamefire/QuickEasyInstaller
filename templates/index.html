@@ -75,6 +75,9 @@
 <div id="application-selection">
     <form method="post">
         <div id="clear-div">
+            <label id="seed-label">Package Seed: </label>
+            <input id="package-seed-input">
+            <button id="seed-btn" type="button">Select Package</button>
             <button id="select-all">Select All</button>
             <button id="clear">Clear All</button>
         </div>
@@ -158,7 +161,7 @@
             </ul>
         </li>
         </ul>
-        <input class="btn" type="submit" value="Install Software">
+        <input class="btn" type="submit" value="Install Software"> <button id="clipboard-btn" type="button"><img id='clipboard-icon' src="{{ url_for('static', filename='other_icons/clipboard.svg') }}"><label id="copy-label">Copy Package Seed</label></button>
     </form>
 </div>
 <!--Cool Comment-->
