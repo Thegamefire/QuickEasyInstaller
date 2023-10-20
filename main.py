@@ -6,8 +6,10 @@ import webview
 import time
 import requests
 import ctypes
+import math
+import pyperclip
 
-from flask import Flask, request, render_template, redirect, Response
+from flask import Flask, request, render_template, redirect, Response, jsonify
 
 app = Flask(__name__)
 
@@ -62,7 +64,7 @@ chocolatey_apps = {
 application_decode_dict = {
     1: 'steam',
     2: 'epicgames',
-    3: 'ubsisoftconnect',
+    3: 'ubisoftconnect',
     4: 'battlenet',
     5: 'eadesktop',
     6: 'discord',
@@ -132,55 +134,75 @@ def resource_path(relative_path):
 
 def get_package_seed(application_list):
     """ Get the package seed of an application list """
-    package_seed = ''
+    seed = ''
+    seed_version = '01'
+    seed = seed + seed_version
     for application in application_list:
-        application_number = None
-        if not package_seed == '':
-            package_seed = package_seed + 'n'
-
-        for key in application_decode_dict:
-            if application_decode_dict[key] == application:
-                application_number = key
+        application_number = 0
+        # Get application number from dict
+        for i, item in application_decode_dict.items():
+            if item == application:
+                application_number = i
                 break
-        if not application_number:
-            print("Invalid Package Seed")
-        else:
-            if application_number < 35:
-                if application_number < 10:
-                    packaged_application_number = str(application_number)
-                else:
-                    packaged_application_number = str(alphabet[application_number - 9])
+
+        # Convert number into seed-code
+        if application_number <= 34:
+            if application_number <= 10:
+                app_code = str(application_number)
             else:
+                app_code = str(alphabet[application_number - 9])
+        else:  # 2 character long code
+            app_code = 'n'
+            # First character in code
+            if math.floor(application_number / 35) <= 9:
+                app_code += str(math.floor(application_number / 35))
+            else:
+                app_code += str(alphabet[math.floor(application_number) - 9])
+            # Second character in code
+            if application_number % 35 <= 9:
+                app_code += str(application_number % 35)
+            else:
+                app_code += str(alphabet[application_number % 35 - 9])
 
-                if (application_number - application_number % 34) / 34 < 10:
-                    packaged_application_number = str(int((application_number - application_number % 34) / 34))
-                else:
-                    packaged_application_number = str(
-                        alphabet[int((application_number - application_number % 34) / 34 - 9)])
-                if application_number % 34 < 10:
-                    packaged_application_number = packaged_application_number + str(int(application_number % 34))
-                else:
-                    packaged_application_number = packaged_application_number + str(
-                        alphabet[int(application_number % 34 - 9)])
-
-        package_seed = package_seed + packaged_application_number
-    return package_seed
+        seed += app_code
+    return seed
 
 
 def decrypt_package_seed(seed):
     """ Return the application list corresponding to a package seed """
     application_list = []
-    seed_codes = seed.split('n')
-    for code in seed_codes:
-        application_number = 0
-        reversed_code = code[::-1]
-        for i, char in enumerate(reversed_code):
-            try:
-                application_number = application_number + int(char) * (34 ** i)
-            except ValueError:
-                application_number = application_number + int(alphabet.index(char)+9) * (34 ** i)
-        application_list.append(application_decode_dict[application_number])
-    return application_list
+    version = seed[:2]
+    seed = seed[2:]
+    if version == '01':
+        char_since_n = 3
+        for i, char in enumerate(seed):
+            application_number = 0
+            if char == 'n':
+                char_since_n = 0
+            else:
+                if not char_since_n < 2:
+                    try:
+                        application_number = int(char)
+                    except ValueError:
+                        application_number = int(alphabet.index(char) + 9)
+
+                elif char_since_n == 0:
+                    try:
+                        application_number = int(char) * 35
+                    except ValueError:
+                        application_number = int(alphabet.index(char) + 9) * 35
+
+                    try:
+                        application_number = application_number + int(seed[i + 1])
+                    except ValueError:
+                        application_number = application_number + int(alphabet.index(seed[i + 1]) + 9)
+                elif char_since_n == 1:
+                    char_since_n += 1
+                    continue
+                application_list.append(application_decode_dict[application_number])
+                char_since_n += 1
+
+        return application_list
 
 
 def updateProgressbar(percentage):
@@ -198,6 +220,23 @@ def checkChocoVersion():
         choco_version = None
     print(choco_version)
     return choco_version
+
+
+@app.route("/copy-seed", methods=['POST'])
+def copy_seed():
+    print('/copy_seed got post request')
+    app_list = request.get_json().get('app_list')  # Access the 'app_list' key
+    print(app_list)
+    pyperclip.copy(get_package_seed(app_list))
+    return jsonify({'message': 'List received successfully', 'jsonp': 'false'})
+
+
+@app.route("/select-package", methods=['POST'])
+def selectPackage():
+    package_seed = request.get_json().get('seed')
+    app_list = decrypt_package_seed(package_seed)
+    print(f'/select-package got post request app_list: {app_list}')
+    return jsonify({'app_list': app_list})
 
 
 @app.route("/chocoinstall", methods=['GET'])
@@ -349,9 +388,10 @@ def sse():
 def index():
     selected_programs = []
     if request.method == 'POST':
+        print('/ got post request')
         selected_programs = request.form.getlist('selected_programs')
         print(selected_programs)
-        installPrograms(selected_programs)
+        # installPrograms(selected_programs)
 
     return render_template('index.html', selected_programs=selected_programs)
 

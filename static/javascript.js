@@ -9,6 +9,9 @@ document.getElementById('close-credits-btn').addEventListener("click", closeCred
 document.getElementById('info-link').addEventListener("click", openCredits)
 document.getElementById('close-done-alert-btn').addEventListener("click", closeOperationCompleted)
 document.getElementById('done-test').addEventListener("click", showOperationCompleted)
+document.getElementById('clipboard-btn').addEventListener("click", copySeed)
+document.getElementById('seed-btn').addEventListener('click', selectPackage)
+
 
 
 
@@ -33,7 +36,7 @@ eventSource.onmessage = function(event) {
 				args = data.split(' ')
 				addToDisplayLog(args[2], args[3])
 			} else {
-				if (data = "Completed Operation") {
+				if (data == "Completed Operation") {
 					showOperationCompleted()
 				}
 			}
@@ -48,8 +51,8 @@ eventSource.onerror = function(event) {
 
 function clearAll(event) {
     event.preventDefault(); // Prevent the default form submission behavior
+	checkboxes = document.getElementsByClassName("selection-checkbox")
 
-    checkboxes = document.getElementsByClassName("selection-checkbox")
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = false;
     }
@@ -174,6 +177,64 @@ function addToDisplayLog(message, type='normal') {
 	}
 	displayLog.innerHTML=displayLogString
     displayLog.scrollTop = displayLog.scrollHeight + 10;
+}
+
+function copySeed() {
+	checkboxes = document.getElementsByClassName("selection-checkbox")
+	checked_applications = []
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked == true) {
+			checked_applications.push(checkboxes[i].value)
+		}
+    }
+	console.log(`Checked applications = ${checked_applications}`);
+
+	console.log(JSON.stringify({app_list: checked_applications}))
+	$.ajax({
+		type : "POST",
+		url : '/copy-seed',
+		dataType: "json",
+		data: JSON.stringify({app_list: checked_applications}),
+		contentType: 'application/json;charset=UTF-8',
+		success: function (data) {
+			console.log(data);
+			}
+	});
+}
+
+function selectPackage() {
+	let package_seed = document.getElementById('package-seed-input').value
+	let checkboxes = document.getElementsByClassName("selection-checkbox")
+	let apps_from_seed = []
+
+	$.ajax({
+		type : "post",
+		url : '/select-package',
+		dataType: "json",
+		data: JSON.stringify({seed: package_seed}),
+		async: false,
+		timeout: 10000,
+		contentType: 'application/json;charset=UTF-8',
+		success: function (data) {
+			console.log(data);
+			apps_from_seed = data['app_list']
+			}
+		});
+	console.log(apps_from_seed)
+
+	for (var i = 0; i < checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
+	for (var i = 0; i < apps_from_seed.length; i++) {
+		console.log(apps_from_seed[i])
+		console.log(i)
+
+        for (var j = 0; j < checkboxes.length; j++) {
+			if (checkboxes[j].value == apps_from_seed[i]) {
+				checkboxes[j].checked = true;
+			}
+		}
+	}
 }
 
 addToDisplayLog("This is a normal log")
