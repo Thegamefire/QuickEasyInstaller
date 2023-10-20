@@ -147,7 +147,7 @@ def get_package_seed(application_list):
 
         # Convert number into seed-code
         if application_number <= 34:
-            if application_number <= 10:
+            if application_number < 10:
                 app_code = str(application_number)
             else:
                 app_code = str(alphabet[application_number - 9])
@@ -287,7 +287,7 @@ def installPrograms(selected_programs):
                         "https://api.github.com/repos/tarcode-apps/BatteryMode/releases/latest",
                         allow_redirects=True)
                     print(release_info.json())
-
+                    installer = None
                     for asset in release_info.json()["assets"]:
                         print(asset["name"])
                         if asset["name"] == "BatteryModeInstaller64.exe":
@@ -308,10 +308,10 @@ def installPrograms(selected_programs):
                             else:
                                 updateDisplayLog(f"Failed to install BatteryMode: {installer_log.stderr}",
                                                  message_type='Error')
-                        else:
-                            updateDisplayLog(
-                                "BatteryMode Installer not found in github repo, please create an issue "
-                                "on the QuEI github repo", message_type="Error")
+                    if not installer:
+                        updateDisplayLog(
+                            "BatteryMode Installer not found in github repo, please create an issue "
+                            "on the QuEI github repo", message_type="Error")
 
                 elif program == 'seb':  # Safe Exam Browser Installation
 

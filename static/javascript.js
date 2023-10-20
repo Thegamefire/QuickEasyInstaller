@@ -34,7 +34,7 @@ eventSource.onmessage = function(event) {
 		} else {// If adding when adding new message has delay between receiving messages split on &&&
 			if (data.startsWith("DisplayLog Append: ")) {
 				args = data.split(' ')
-				addToDisplayLog(args[2], args[3])
+				addToDisplayLog(args[1], args[2])
 			} else {
 				if (data == "Completed Operation") {
 					showOperationCompleted()
